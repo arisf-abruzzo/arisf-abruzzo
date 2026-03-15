@@ -830,20 +830,45 @@ function doRegister(){
   var pw=(document.getElementById("re-pw").value||"");
   var pw2=(document.getElementById("re-pw2").value||"");
   var cd=(document.getElementById("re-cd").value||"").trim().toUpperCase();
+  var pin=(document.getElementById("re-pin").value||"").trim();
+
+  // Validazioni base
   if(!nm){showMsg("re-msg","Inserisci nome e cognome.","err");return}
   if(!em||em.indexOf("@")<0){showMsg("re-msg","Email non valida.","err");return}
   if(pw.length<6){showMsg("re-msg","Password minimo 6 caratteri.","err");return}
   if(pw!==pw2){showMsg("re-msg","Le password non coincidono.","err");return}
-  if(!cd||CODICI.indexOf(cd)<0){showMsg("re-msg","Codice invito non valido.","err");return}
-  var users=getU();
-  for(var i=0;i<users.length;i++){if(users[i].email===em){showMsg("re-msg","Email gia registrata.","err");return}}
-  var pin=(document.getElementById("re-pin").value||"").trim();
+  if(!cd){showMsg("re-msg","Inserisci il codice invito.","err");return}
   if(!pin||pin.length<4){showMsg("re-msg","Inserisci un PIN di almeno 4 cifre.","err");return}
   if(!/^[0-9]+$/.test(pin)){showMsg("re-msg","Il PIN deve contenere solo numeri.","err");return}
-  users.push({nome:nm,email:em,pw:hash(pw),pin:hash(pin)});
-  savU(users);
-  showMsg("re-msg","Registrazione completata! Ora accedi.","ok");
-  setTimeout(function(){showView("login")},2000);
+
+  // Email gia registrata?
+  var users=getU();
+  for(var i=0;i<users.length;i++){
+    if(users[i].email===em){showMsg("re-msg","Email gia registrata. Accedi.","err");return}
+  }
+
+  // Codici globali — validi su qualsiasi dispositivo senza internet
+  var codiciGlobali=["ARISF2025","ABR-2025","MMG-AQ","MMG-CH","MMG-PE","MMG-TE"];
+  if(codiciGlobali.indexOf(cd)>=0){
+    users.push({nome:nm,email:em,pw:hash(pw),pin:hash(pin),attivo:"SI",ruolo:"Viewer"});
+    savU(users);
+    showMsg("re-msg","Registrazione completata! Ora accedi.","ok");
+    setTimeout(function(){showView("login")},2000);
+    return;
+  }
+
+  // Codice personale — verifica su Google Sheets
+  showMsg("re-msg","Verifica codice in corso...","ok");
+  gsCall("verifica_codice",{codice:cd,email:em},function(data){
+    if(!data||!data.ok){
+      showMsg("re-msg","Codice invito non valido.","err");return;
+    }
+    var usersNow=getU();
+    usersNow.push({nome:nm,email:em,pw:hash(pw),pin:hash(pin),attivo:"SI",ruolo:data.ruolo||"Viewer"});
+    savU(usersNow);
+    showMsg("re-msg","Registrazione completata! Ora accedi.","ok");
+    setTimeout(function(){showView("login")},2000);
+  });
 }
 
 // ── Reset PIN utente (solo admin) ─────────────────────────────
@@ -1499,7 +1524,7 @@ function rifiutaRichiesta(id){
 }
 
 function getMsgInvito(nome, email, codice){
-  var link = "https://spinellapaolo-droid.github.io/arisf-abruzzo/";
+  var link = "https://arisf-abruzzo.github.io/arisf-abruzzo/";
   return "Ciao " + nome + ",%0A%0A"
     + "Sei stato autorizzato ad accedere all'app *ARISF Abruzzo* - Rubrica Medici.%0A%0A"
     + "--- COME ACCEDERE ----%0A%0A"
@@ -1524,7 +1549,7 @@ function condividiWA(nome, email, codice){
 
 function condividiEmail(nome, email, codice){
   var sogg = "ARISF Abruzzo — Il tuo accesso all'app";
-  var link = "https://spinellapaolo-droid.github.io/arisf-abruzzo/";
+  var link = "https://arisf-abruzzo.github.io/arisf-abruzzo/";
   var corpo =
     "Ciao " + nome + ",%0D%0A%0D%0A"
     + "Sei stato autorizzato ad accedere all'app ARISF Abruzzo - Rubrica Medici.%0D%0A%0D%0A"
