@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<!-- saved from url=(0062)file:///Users/paolospinella/Downloads/ARISF_Abruzzo_v16_1.html -->
+<!-- saved from url=(0062)file:///Users/paolospinella/Downloads/ARISF_Abruzzo_v19_1.html -->
 <html lang="it"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 
 <meta name="viewport" content="width=device-width,initial-scale=1.0,maximum-scale=1.0">
@@ -143,6 +143,10 @@ body{font-family:Georgia,serif;min-height:100vh;background:#0A1628}
 /* ── LOGOUT ── */
 #lgout{position:fixed;bottom:16px;right:14px;z-index:150;background:rgba(10,22,40,.85);color:rgba(255,255,255,.45);border:1px solid rgba(255,255,255,.12);border-radius:50px;padding:7px 14px;font-size:11px;cursor:pointer;font-family:Georgia,serif;display:none}
 #lgout.show{display:block}
+
+/* Overlay nascosti per default — aperti via JS */
+#ov-admin, #ov-mod, #ov-add { display:none; }
+#ov-admin.open, #ov-mod.open, #ov-add.open { display:flex; }
 </style>
 </head>
 <body>
@@ -268,7 +272,7 @@ body{font-family:Georgia,serif;min-height:100vh;background:#0A1628}
 </div>
 
 <!-- OVERLAY ADMIN UTENTI -->
-<div id="ov-admin" onclick="if(event.target===this)chiudiAdmin()" style="position:fixed;inset:0;z-index:400;background:rgba(10,22,40,.85);backdrop-filter:blur(4px);display:none;align-items:flex-end">
+<div id="ov-admin" onclick="if(event.target===this)chiudiAdmin()" style="position:fixed;inset:0;z-index:400;background:rgba(10,22,40,.85);backdrop-filter:blur(4px)align-items:flex-end">
   <div style="background:#fff;border-radius:22px 22px 0 0;width:100%;max-height:90vh;overflow-y:auto;padding:20px 18px 32px;box-shadow:0 -10px 40px rgba(0,0,0,.3)">
     <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:4px">
       <div style="font-weight:800;font-size:17px;color:#0A1628">👤 Gestione Utenti</div>
@@ -331,7 +335,7 @@ body{font-family:Georgia,serif;min-height:100vh;background:#0A1628}
 </div>
 
 <!-- OVERLAY MODIFICA MEDICO -->
-<div id="ov-mod" onclick="if(event.target===this)chiudiModifica()" style="position:fixed;inset:0;z-index:350;background:rgba(10,22,40,.8);backdrop-filter:blur(4px);display:none;align-items:flex-end">
+<div id="ov-mod" onclick="if(event.target===this)chiudiModifica()" style="position:fixed;inset:0;z-index:350;background:rgba(10,22,40,.8);backdrop-filter:blur(4px)align-items:flex-end">
   <div style="background:#fff;border-radius:22px 22px 0 0;width:100%;max-height:90vh;overflow-y:auto;padding:20px 18px 32px;box-shadow:0 -10px 40px rgba(0,0,0,.3)">
     <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:16px">
       <div style="font-weight:800;font-size:17px;color:#0A1628">✏️ Modifica Medico</div>
@@ -399,7 +403,7 @@ body{font-family:Georgia,serif;min-height:100vh;background:#0A1628}
 </div>
 
 <!-- OVERLAY AGGIUNGI MEDICO -->
-<div id="ov-add" onclick="if(event.target===this)chiudiFormMedico()" style="position:fixed;inset:0;z-index:300;background:rgba(10,22,40,.8);backdrop-filter:blur(4px);display:none;align-items:flex-end">
+<div id="ov-add" onclick="if(event.target===this)chiudiFormMedico()" style="position:fixed;inset:0;z-index:300;background:rgba(10,22,40,.8);backdrop-filter:blur(4px)align-items:flex-end">
   <div style="background:#fff;border-radius:22px 22px 0 0;width:100%;max-height:90vh;overflow-y:auto;padding:20px 18px 32px;box-shadow:0 -10px 40px rgba(0,0,0,.3)">
     <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:14px">
       <div style="font-weight:800;font-size:17px;color:#0A1628">+ Aggiungi Medico</div>
@@ -575,138 +579,13 @@ body{font-family:Georgia,serif;min-height:100vh;background:#0A1628}
 </div>
 
 <!-- OVERLAY ADMIN UTENTI -->
-<div id="ov-admin" onclick="if(event.target===this)chiudiAdmin()" style="position:fixed;inset:0;z-index:400;background:rgba(10,22,40,.85);backdrop-filter:blur(4px);display:none;align-items:flex-end">
-  <div style="background:#fff;border-radius:22px 22px 0 0;width:100%;max-height:90vh;overflow-y:auto;padding:20px 18px 32px;box-shadow:0 -10px 40px rgba(0,0,0,.3)">
-    <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:4px">
-      <div style="font-weight:800;font-size:17px;color:#0A1628">👤 Gestione Utenti</div>
-      <button onclick="chiudiAdmin()" style="background:#F0F0F0;border:none;border-radius:50%;width:30px;height:30px;cursor:pointer;font-size:16px">✕</button>
-    </div>
-    <div style="font-size:11px;color:#90A4AE;margin-bottom:16px">Solo l'amministratore puo' accedere a questa sezione.</div>
 
-    <div id="admin-auth" style="margin-bottom:16px">
-      <div style="text-align:center;padding:16px;background:#F8FAFC;border-radius:12px;margin-bottom:12px">
-        <div style="font-size:32px;margin-bottom:8px">👤</div>
-        <div style="font-size:13px;color:#546E7A;line-height:1.5">Verifica in corso...<br>Controllo che il tuo account sia autorizzato come amministratore.</div>
-      </div>
-      <button onclick="verificaAdmin()" style="width:100%;background:#0A1628;color:#FFB300;border:none;border-radius:50px;padding:12px;font-size:14px;font-weight:700;cursor:pointer;font-family:Georgia,serif">Verifica Accesso Admin</button>
-      <div id="admin-auth-msg" style="display:none;font-size:12px;margin-top:8px;padding:8px;border-radius:8px"></div>
-    </div>
-
-    <div id="admin-panel" style="display:none">
-      <!-- Aggiungi utente -->
-      <div style="background:#F8FAFC;border-radius:12px;padding:14px;margin-bottom:16px">
-        <div style="font-weight:700;font-size:13px;color:#0A1628;margin-bottom:12px">+ Aggiungi Utente</div>
-        <input id="new-nome" placeholder="Nome e Cognome" style="width:100%;padding:10px;border-radius:10px;border:1.5px solid #E0E0E0;font-family:Georgia,serif;font-size:13px;margin-bottom:8px;outline:none;box-sizing:border-box">
-        <input id="new-email" placeholder="Email" type="email" style="width:100%;padding:10px;border-radius:10px;border:1.5px solid #E0E0E0;font-family:Georgia,serif;font-size:13px;margin-bottom:8px;outline:none;box-sizing:border-box">
-        <label style="font-size:11px;font-weight:700;color:#546E7A;display:block;margin-bottom:4px;margin-top:8px">RUOLO</label>
-        <select id="new-ruolo" style="width:100%;padding:10px;border-radius:10px;border:1.5px solid #E0E0E0;font-family:Georgia,serif;font-size:13px;margin-bottom:8px;outline:none;background:#fff">
-          <option value="Viewer">👁 Viewer — solo lettura e richieste</option>
-          <option value="Editor">✏️ Editor — inserimento diretto</option>
-        </select>
-        <input id="new-note" placeholder="Note (opzionale)" style="width:100%;padding:10px;border-radius:10px;border:1.5px solid #E0E0E0;font-family:Georgia,serif;font-size:13px;margin-bottom:10px;outline:none;box-sizing:border-box">
-        <div id="add-user-msg" style="display:none;font-size:12px;margin-bottom:8px;padding:8px;border-radius:8px"></div>
-        <button onclick="aggiungiUtente()" style="width:100%;background:#FFB300;color:#0A1628;border:none;border-radius:50px;padding:11px;font-size:14px;font-weight:700;cursor:pointer;font-family:Georgia,serif">Aggiungi e Invia Codice</button>
-        <div style="font-size:11px;color:#90A4AE;margin-top:6px;text-align:center">Il codice invito viene generato automaticamente e inviato via email</div>
-      </div>
-
-      <!-- Lista utenti -->
-      <!-- TAB ADMIN -->
-      <div style="display:flex;gap:8px;margin-bottom:14px">
-        <button onclick="switchAdminTab(&#39;utenti&#39;)" id="tab-utenti" style="flex:1;padding:9px;border-radius:10px;border:none;background:#0A1628;color:#FFB300;font-size:12px;font-weight:700;cursor:pointer;font-family:Georgia,serif">
-          👥 Utenti
-        </button>
-        <button onclick="switchAdminTab(&#39;richieste&#39;)" id="tab-richieste" style="flex:1;padding:9px;border-radius:10px;border:none;background:#F0F4F8;color:#546E7A;font-size:12px;font-weight:700;cursor:pointer;font-family:Georgia,serif">
-          📋 Richieste <span id="badge-richieste" style="display:none;background:#E53935;color:#fff;border-radius:50%;padding:1px 6px;font-size:10px;margin-left:4px">0</span>
-        </button>
-      </div>
-
-      <!-- TAB UTENTI -->
-      <div id="panel-utenti">
-        <div style="font-weight:700;font-size:13px;color:#0A1628;margin-bottom:10px">👥 Utenti Autorizzati</div>
-        <button onclick="caricaUtenti()" style="background:#E3F2FD;color:#1565C0;border:none;border-radius:20px;padding:6px 14px;font-size:12px;font-weight:700;cursor:pointer;font-family:Georgia,serif;margin-bottom:12px">↻ Aggiorna lista</button>
-        <div id="lista-utenti"></div>
-      </div>
-
-      <!-- TAB RICHIESTE -->
-      <div id="panel-richieste" style="display:none">
-        <div style="font-weight:700;font-size:13px;color:#0A1628;margin-bottom:10px">📋 Richieste in Attesa</div>
-        <button onclick="caricaRichieste()" style="background:#FFF3E0;color:#E65100;border:none;border-radius:20px;padding:6px 14px;font-size:12px;font-weight:700;cursor:pointer;font-family:Georgia,serif;margin-bottom:12px">↻ Aggiorna</button>
-        <div id="lista-richieste"></div>
-      </div>
-    </div>
-  </div>
-</div>
 
 <!-- OVERLAY MODIFICA MEDICO -->
-<div id="ov-mod" onclick="if(event.target===this)chiudiModifica()" style="position:fixed;inset:0;z-index:350;background:rgba(10,22,40,.8);backdrop-filter:blur(4px);display:none;align-items:flex-end">
-  <div style="background:#fff;border-radius:22px 22px 0 0;width:100%;max-height:90vh;overflow-y:auto;padding:20px 18px 32px;box-shadow:0 -10px 40px rgba(0,0,0,.3)">
-    <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:16px">
-      <div style="font-weight:800;font-size:17px;color:#0A1628">✏️ Modifica Medico</div>
-      <button onclick="chiudiModifica()" style="background:#F0F0F0;border:none;border-radius:50%;width:30px;height:30px;cursor:pointer;font-size:16px">✕</button>
-    </div>
-    <div id="mod-msg" style="display:none;font-size:12px;padding:10px;border-radius:8px;margin-bottom:12px"></div>
-    <input type="hidden" id="mod-id">
 
-    <div style="display:flex;gap:8px;margin-bottom:12px">
-      <div style="flex:1">
-        <label style="font-size:11px;font-weight:700;color:#546E7A;display:block;margin-bottom:4px">COGNOME</label>
-        <input id="mod-c" style="width:100%;padding:10px;border-radius:10px;border:1.5px solid #E0E0E0;font-family:Georgia,serif;font-size:14px;outline:none;box-sizing:border-box">
-      </div>
-      <div style="flex:1">
-        <label style="font-size:11px;font-weight:700;color:#546E7A;display:block;margin-bottom:4px">NOME</label>
-        <input id="mod-n" style="width:100%;padding:10px;border-radius:10px;border:1.5px solid #E0E0E0;font-family:Georgia,serif;font-size:14px;outline:none;box-sizing:border-box">
-      </div>
-    </div>
-
-    <label style="font-size:11px;font-weight:700;color:#546E7A;display:block;margin-bottom:4px">REPARTO / SPECIALISTICA</label>
-    <input id="mod-rp" style="width:100%;padding:10px;border-radius:10px;border:1.5px solid #E0E0E0;font-family:Georgia,serif;font-size:14px;margin-bottom:12px;outline:none;box-sizing:border-box">
-
-    <label style="font-size:11px;font-weight:700;color:#546E7A;display:block;margin-bottom:4px">STRUTTURA / OSPEDALE</label>
-    <input id="mod-st" style="width:100%;padding:10px;border-radius:10px;border:1.5px solid #E0E0E0;font-family:Georgia,serif;font-size:14px;margin-bottom:12px;outline:none;box-sizing:border-box">
-
-    <label style="font-size:11px;font-weight:700;color:#546E7A;display:block;margin-bottom:4px">INDIRIZZO</label>
-    <input id="mod-i" style="width:100%;padding:10px;border-radius:10px;border:1.5px solid #E0E0E0;font-family:Georgia,serif;font-size:14px;margin-bottom:12px;outline:none;box-sizing:border-box">
-
-    <div style="display:flex;gap:8px;margin-bottom:12px">
-      <div style="flex:1">
-        <label style="font-size:11px;font-weight:700;color:#546E7A;display:block;margin-bottom:4px">CITTA</label>
-        <input id="mod-t" style="width:100%;padding:10px;border-radius:10px;border:1.5px solid #E0E0E0;font-family:Georgia,serif;font-size:14px;outline:none;box-sizing:border-box">
-      </div>
-      <div style="flex:1">
-        <label style="font-size:11px;font-weight:700;color:#546E7A;display:block;margin-bottom:4px">CAP</label>
-        <input id="mod-cap" style="width:100%;padding:10px;border-radius:10px;border:1.5px solid #E0E0E0;font-family:Georgia,serif;font-size:14px;outline:none;box-sizing:border-box">
-      </div>
-    </div>
-
-    <label style="font-size:11px;font-weight:700;color:#546E7A;display:block;margin-bottom:4px">TELEFONO</label>
-    <input id="mod-tel" style="width:100%;padding:10px;border-radius:10px;border:1.5px solid #E0E0E0;font-family:Georgia,serif;font-size:14px;margin-bottom:12px;outline:none;box-sizing:border-box">
-
-    <label style="font-size:11px;font-weight:700;color:#546E7A;display:block;margin-bottom:4px">EMAIL</label>
-    <input id="mod-em" style="width:100%;padding:10px;border-radius:10px;border:1.5px solid #E0E0E0;font-family:Georgia,serif;font-size:14px;margin-bottom:12px;outline:none;box-sizing:border-box">
-
-    <label style="font-size:11px;font-weight:700;color:#546E7A;display:block;margin-bottom:4px">GIORNI RICEVIMENTO</label>
-    <input id="mod-g" style="width:100%;padding:10px;border-radius:10px;border:1.5px solid #E0E0E0;font-family:Georgia,serif;font-size:14px;margin-bottom:12px;outline:none;box-sizing:border-box">
-
-    <div style="display:flex;gap:8px;margin-bottom:12px">
-      <div style="flex:1">
-        <label style="font-size:11px;font-weight:700;color:#546E7A;display:block;margin-bottom:4px">ORARIO MATTINA</label>
-        <input id="mod-mo" style="width:100%;padding:10px;border-radius:10px;border:1.5px solid #E0E0E0;font-family:Georgia,serif;font-size:13px;outline:none;box-sizing:border-box">
-      </div>
-      <div style="flex:1">
-        <label style="font-size:11px;font-weight:700;color:#546E7A;display:block;margin-bottom:4px">ORARIO POMERIGGIO</label>
-        <input id="mod-po" style="width:100%;padding:10px;border-radius:10px;border:1.5px solid #E0E0E0;font-family:Georgia,serif;font-size:13px;outline:none;box-sizing:border-box">
-      </div>
-    </div>
-
-    <label style="font-size:11px;font-weight:700;color:#546E7A;display:block;margin-bottom:4px">NOTE</label>
-    <textarea id="mod-no" style="width:100%;padding:10px;border-radius:10px;border:1.5px solid #E0E0E0;font-family:Georgia,serif;font-size:14px;margin-bottom:16px;outline:none;box-sizing:border-box;resize:vertical;min-height:60px"></textarea>
-
-    <button onclick="salvaModifica()" style="width:100%;background:#1565C0;color:#fff;border:none;border-radius:50px;padding:14px;font-size:15px;font-weight:700;cursor:pointer;font-family:Georgia,serif">Salva Modifiche</button>
-  </div>
-</div>
 
 <!-- OVERLAY AGGIUNGI MEDICO -->
-<div id="ov-add" onclick="if(event.target===this)chiudiFormMedico()" style="position:fixed;inset:0;z-index:300;background:rgba(10,22,40,.8);backdrop-filter:blur(4px);display:none;align-items:flex-end">
+
   <div style="background:#fff;border-radius:22px 22px 0 0;width:100%;max-height:90vh;overflow-y:auto;padding:20px 18px 32px;box-shadow:0 -10px 40px rgba(0,0,0,.3)">
     <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:16px">
       <div style="font-weight:800;font-size:17px;color:#0A1628">+ Aggiungi Medico</div>
@@ -720,7 +599,7 @@ body{font-family:Georgia,serif;min-height:100vh;background:#0A1628}
 
     <!-- TIPO — cambia il form dinamicamente -->
     <!-- OVERLAY DETTAGLIO -->
-<div id="ov" onclick="if(event.target===this)closeDetail()" style="display:none">
+<div id="ov" onclick="if(event.target===this)closeDetail()">
   <div id="det">
     <div id="det-hdr">
       <button class="xbtn" onclick="closeDetail()" type="button">✕</button>
@@ -1080,6 +959,20 @@ function chip(txt,cls,fn){
   b.type="button";b.className="chip "+cls;b.innerHTML=txt;b.onclick=fn;return b;
 }
 
+// Event delegation per aprire scheda medico
+document.addEventListener("DOMContentLoaded", function(){
+  var lista = document.getElementById("lista");
+  if(lista){
+    lista.addEventListener("click", function(e){
+      var card = e.target.closest(".mcard");
+      if(card){
+        var id = card.getAttribute("data-id");
+        if(id) openDet(id);
+      }
+    });
+  }
+});
+
 function buildFilters(){
   // TIPO
   var tel=document.getElementById("tc");tel.innerHTML="";
@@ -1168,7 +1061,7 @@ function doFilter(){
   el.innerHTML=lst.map(function(m){
     var c=prov(m),tc2=tipo(m);
     var nome=hasData(m)?m.C+" "+m.N:"<span class='empty-name'>Da inserire</span>";
-    return'<div class="mcard" style="border-left-color:'+c+'" onclick="openDet('+m.ID+')">'
+    return'<div class="mcard" style="border-left-color:'+c+'" data-id="'+m.ID+'">'
       +'<div class="mcard-top"><div class="av" style="background:'+tc2+'">'+ini(m)+'</div>'
       +'<div style="flex:1;min-width:0">'
       +'<div class="mc-name">'+nome+'</div>'
@@ -1260,12 +1153,12 @@ function apriModifica(id){
   msg.style.display="none";
   // Chiudi scheda e apri modifica
   closeDetail();
-  document.getElementById("ov-mod").style.display="flex";
+  document.getElementById("ov-mod").classList.add("open");
   document.body.style.overflow="hidden";
 }
 
 function chiudiModifica(){
-  document.getElementById("ov-mod").style.display="none";
+  document.getElementById("ov-mod").classList.remove("open");
   document.body.style.overflow="";
 }
 
@@ -1388,12 +1281,12 @@ function apriFormMedico(){
     }
   }
 
-  document.getElementById("ov-add").style.display="flex";
+  document.getElementById("ov-add").classList.add("open");
   document.body.style.overflow="hidden";
 }
 
 function chiudiFormMedico(){
-  document.getElementById("ov-add").style.display="none";
+  document.getElementById("ov-add").classList.remove("open");
   document.body.style.overflow="";
 }
 
@@ -1401,7 +1294,7 @@ function chiudiFormMedico(){
 var adminVerificato = false;
 
 function apriAdmin(){
-  document.getElementById("ov-admin").style.display="flex";
+  document.getElementById("ov-admin").classList.add("open");
   document.body.style.overflow="hidden";
   document.getElementById("admin-panel").style.display="none";
   document.getElementById("admin-auth").style.display="block";
@@ -1411,7 +1304,7 @@ function apriAdmin(){
 }
 
 function chiudiAdmin(){
-  document.getElementById("ov-admin").style.display="none";
+  document.getElementById("ov-admin").classList.remove("open");
   document.body.style.overflow="";
   adminVerificato=false;
 }
@@ -2044,4 +1937,4 @@ function getRichieste(){try{return JSON.parse(sg("_req")||"[]");}catch(e){return
 function saveRichieste(r){ss("_req",JSON.stringify(r));}
 </script>
 
-</div></div></body></html>
+</div></body></html>
