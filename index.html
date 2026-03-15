@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<!-- saved from url=(0060)file:///Users/paolospinella/Downloads/ARISF_Abruzzo_v12.html -->
+<!-- saved from url=(0060)file:///Users/paolospinella/Downloads/ARISF_Abruzzo_v13.html -->
 <html lang="it"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 
 <meta name="viewport" content="width=device-width,initial-scale=1.0,maximum-scale=1.0">
@@ -1348,6 +1348,21 @@ function apriFormMedico(){
   var msg=document.getElementById("add-msg");
   if(msg) msg.style.display="none";
 
+  // Aggiorna testo pulsante in base al ruolo
+  var sess2=getS();
+  var isAdm2  = sess2 && (ADMIN_EMAILS.indexOf((sess2.email||"").toLowerCase())>=0);
+  var isEd2   = sess2 && (sess2.ruolo==="Editor");
+  var btnInvia=document.querySelector("#ov-add button[onclick='inviaRichiesta()']");
+  if(btnInvia){
+    if(isAdm2||isEd2){
+      btnInvia.textContent="Aggiungi Medico →";
+      btnInvia.style.background="#FFB300";
+    } else {
+      btnInvia.textContent="Invia Richiesta →";
+      btnInvia.style.background="#1565C0";
+    }
+  }
+
   document.getElementById("ov-add").style.display="flex";
   document.body.style.overflow="hidden";
 }
@@ -1951,31 +1966,52 @@ function inviaRichiesta(){
 
   var medico={TI:ti,P:p,ST:st,RP:rp,C:c,N:n,RU:ru,I:i_addr,T:t,MA:ma,G:g,MO:mo,PO:po,MOD:mod,TEL:tel,EM:em,NO:no};
 
-  // NON aggiungere subito — salva in attesa di approvazione admin
-  medico.ID    = "REQ-" + Date.now();
-  medico.stato = "IN_ATTESA";
-  medico.inviataDa = sess ? sess.nome + " (" + sess.email + ")" : "Sconosciuto";
-  medico.dataRichiesta = new Date().toLocaleDateString("it");
+  // Controlla ruolo utente
+  var isAdmin  = sess && (ADMIN_EMAILS.indexOf((sess.email||"").toLowerCase()) >= 0);
+  var isEditor = sess && (sess.ruolo === "Editor");
 
-  // Salva nel registro richieste locale
-  var richieste = getRichieste();
-  richieste.push(medico);
-  saveRichieste(richieste);
-
-  // Invia anche a Google Sheets (per notifica email admin)
-  gsCall("add_richiesta",{
-    medico:  medico,
-    utente:  medico.inviataDa
-  }, null);
-
-  msg.style.display="block";
-  msg.style.background="rgba(255,179,0,.15)";
-  msg.style.color="#E65100";
-  msg.textContent="Richiesta inviata! Il medico apparira nell'app solo dopo l'approvazione dell'amministratore.";
-
-  setTimeout(function(){
+  function resetAddForm(){
+    ["add-st-mmg","add-i-mmg","add-rp-mmg","add-i-mmg2","add-g2","add-mo2","add-po2",
+     "add-c","add-n","add-t","add-cap","add-tel","add-em","add-no","add-i-osp",
+     "add-g","add-mo","add-po"].forEach(function(id){
+      var el=document.getElementById(id);if(el)el.value="";
+    });
+    ["g-lun","g-mar","g-mer","g-gio","g-ven"].forEach(function(id){
+      var cb=document.getElementById(id);if(cb)cb.checked=false;
+    });
+    document.querySelectorAll("#modalita-checks input").forEach(function(cb){cb.checked=false;});
+    var s2=document.getElementById("sez-studio2");
+    if(s2) s2.style.display="none";
     chiudiFormMedico();
-  },2500);
+  }
+
+  if(isAdmin || isEditor){
+    // ── EDITOR / ADMIN: inserimento diretto ──────────────────
+    medico.ID = M.length + 1;
+    M.push(medico);
+    msg.style.display="block";
+    msg.style.background="rgba(46,125,50,.1)";
+    msg.style.color="#2E7D32";
+    msg.textContent="Medico aggiunto direttamente! Visibile subito nell'app.";
+    // Sincronizza con GS in background
+    gsCall("add_richiesta",{medico:medico,utente:(sess.nome+" (Editor)"),approvato:true},null);
+    setTimeout(function(){ resetAddForm(); doFilter(); },2000);
+  } else {
+    // ── VIEWER: richiesta per approvazione ───────────────────
+    medico.ID    = "REQ-" + Date.now();
+    medico.stato = "IN_ATTESA";
+    medico.inviataDa = sess ? sess.nome + " (" + sess.email + ")" : "Sconosciuto";
+    medico.dataRichiesta = new Date().toLocaleDateString("it");
+    var richieste = getRichieste();
+    richieste.push(medico);
+    saveRichieste(richieste);
+    gsCall("add_richiesta",{medico:medico,utente:medico.inviataDa},null);
+    msg.style.display="block";
+    msg.style.background="rgba(255,179,0,.15)";
+    msg.style.color="#E65100";
+    msg.textContent="Richiesta inviata! Il medico apparira nell'app solo dopo l'approvazione dell'amministratore.";
+    setTimeout(function(){ resetAddForm(); },2500);
+  }
 }
 
 // ── Storage richieste ─────────────────────────────────────────
