@@ -332,6 +332,74 @@ body{font-family:Georgia,serif;min-height:100vh;background:#0A1628}
   </div>
 </div>
 
+<!-- OVERLAY MODIFICA MEDICO -->
+<div id="ov-mod" onclick="if(event.target===this)chiudiModifica()" style="position:fixed;inset:0;z-index:350;background:rgba(10,22,40,.8);backdrop-filter:blur(4px);display:none;align-items:flex-end">
+  <div style="background:#fff;border-radius:22px 22px 0 0;width:100%;max-height:90vh;overflow-y:auto;padding:20px 18px 32px;box-shadow:0 -10px 40px rgba(0,0,0,.3)">
+    <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:16px">
+      <div style="font-weight:800;font-size:17px;color:#0A1628">&#9999;&#65039; Modifica Medico</div>
+      <button onclick="chiudiModifica()" style="background:#F0F0F0;border:none;border-radius:50%;width:30px;height:30px;cursor:pointer;font-size:16px">&#10005;</button>
+    </div>
+    <div id="mod-msg" style="display:none;font-size:12px;padding:10px;border-radius:8px;margin-bottom:12px"></div>
+    <input type="hidden" id="mod-id">
+
+    <div style="display:flex;gap:8px;margin-bottom:12px">
+      <div style="flex:1">
+        <label style="font-size:11px;font-weight:700;color:#546E7A;display:block;margin-bottom:4px">COGNOME</label>
+        <input id="mod-c" style="width:100%;padding:10px;border-radius:10px;border:1.5px solid #E0E0E0;font-family:Georgia,serif;font-size:14px;outline:none;box-sizing:border-box">
+      </div>
+      <div style="flex:1">
+        <label style="font-size:11px;font-weight:700;color:#546E7A;display:block;margin-bottom:4px">NOME</label>
+        <input id="mod-n" style="width:100%;padding:10px;border-radius:10px;border:1.5px solid #E0E0E0;font-family:Georgia,serif;font-size:14px;outline:none;box-sizing:border-box">
+      </div>
+    </div>
+
+    <label style="font-size:11px;font-weight:700;color:#546E7A;display:block;margin-bottom:4px">REPARTO / SPECIALISTICA</label>
+    <input id="mod-rp" style="width:100%;padding:10px;border-radius:10px;border:1.5px solid #E0E0E0;font-family:Georgia,serif;font-size:14px;margin-bottom:12px;outline:none;box-sizing:border-box">
+
+    <label style="font-size:11px;font-weight:700;color:#546E7A;display:block;margin-bottom:4px">STRUTTURA / OSPEDALE</label>
+    <input id="mod-st" style="width:100%;padding:10px;border-radius:10px;border:1.5px solid #E0E0E0;font-family:Georgia,serif;font-size:14px;margin-bottom:12px;outline:none;box-sizing:border-box">
+
+    <label style="font-size:11px;font-weight:700;color:#546E7A;display:block;margin-bottom:4px">INDIRIZZO</label>
+    <input id="mod-i" style="width:100%;padding:10px;border-radius:10px;border:1.5px solid #E0E0E0;font-family:Georgia,serif;font-size:14px;margin-bottom:12px;outline:none;box-sizing:border-box">
+
+    <div style="display:flex;gap:8px;margin-bottom:12px">
+      <div style="flex:1">
+        <label style="font-size:11px;font-weight:700;color:#546E7A;display:block;margin-bottom:4px">CITTA</label>
+        <input id="mod-t" style="width:100%;padding:10px;border-radius:10px;border:1.5px solid #E0E0E0;font-family:Georgia,serif;font-size:14px;outline:none;box-sizing:border-box">
+      </div>
+      <div style="flex:1">
+        <label style="font-size:11px;font-weight:700;color:#546E7A;display:block;margin-bottom:4px">CAP</label>
+        <input id="mod-cap" style="width:100%;padding:10px;border-radius:10px;border:1.5px solid #E0E0E0;font-family:Georgia,serif;font-size:14px;outline:none;box-sizing:border-box">
+      </div>
+    </div>
+
+    <label style="font-size:11px;font-weight:700;color:#546E7A;display:block;margin-bottom:4px">TELEFONO</label>
+    <input id="mod-tel" style="width:100%;padding:10px;border-radius:10px;border:1.5px solid #E0E0E0;font-family:Georgia,serif;font-size:14px;margin-bottom:12px;outline:none;box-sizing:border-box">
+
+    <label style="font-size:11px;font-weight:700;color:#546E7A;display:block;margin-bottom:4px">EMAIL</label>
+    <input id="mod-em" style="width:100%;padding:10px;border-radius:10px;border:1.5px solid #E0E0E0;font-family:Georgia,serif;font-size:14px;margin-bottom:12px;outline:none;box-sizing:border-box">
+
+    <label style="font-size:11px;font-weight:700;color:#546E7A;display:block;margin-bottom:4px">GIORNI RICEVIMENTO</label>
+    <input id="mod-g" style="width:100%;padding:10px;border-radius:10px;border:1.5px solid #E0E0E0;font-family:Georgia,serif;font-size:14px;margin-bottom:12px;outline:none;box-sizing:border-box">
+
+    <div style="display:flex;gap:8px;margin-bottom:12px">
+      <div style="flex:1">
+        <label style="font-size:11px;font-weight:700;color:#546E7A;display:block;margin-bottom:4px">ORARIO MATTINA</label>
+        <input id="mod-mo" style="width:100%;padding:10px;border-radius:10px;border:1.5px solid #E0E0E0;font-family:Georgia,serif;font-size:13px;outline:none;box-sizing:border-box">
+      </div>
+      <div style="flex:1">
+        <label style="font-size:11px;font-weight:700;color:#546E7A;display:block;margin-bottom:4px">ORARIO POMERIGGIO</label>
+        <input id="mod-po" style="width:100%;padding:10px;border-radius:10px;border:1.5px solid #E0E0E0;font-family:Georgia,serif;font-size:13px;outline:none;box-sizing:border-box">
+      </div>
+    </div>
+
+    <label style="font-size:11px;font-weight:700;color:#546E7A;display:block;margin-bottom:4px">NOTE</label>
+    <textarea id="mod-no" style="width:100%;padding:10px;border-radius:10px;border:1.5px solid #E0E0E0;font-family:Georgia,serif;font-size:14px;margin-bottom:16px;outline:none;box-sizing:border-box;resize:vertical;min-height:60px"></textarea>
+
+    <button onclick="salvaModifica()" style="width:100%;background:#1565C0;color:#fff;border:none;border-radius:50px;padding:14px;font-size:15px;font-weight:700;cursor:pointer;font-family:Georgia,serif">Salva Modifiche</button>
+  </div>
+</div>
+
 <!-- OVERLAY AGGIUNGI MEDICO -->
 <div id="ov-add" onclick="if(event.target===this)chiudiFormMedico()" style="position:fixed;inset:0;z-index:300;background:rgba(10,22,40,.8);backdrop-filter:blur(4px);display:none;align-items:flex-end">
   <div style="background:#fff;border-radius:22px 22px 0 0;width:100%;max-height:92vh;overflow-y:auto;padding:20px 18px 32px;box-shadow:0 -10px 40px rgba(0,0,0,.3)">
@@ -528,6 +596,74 @@ body{font-family:Georgia,serif;min-height:100vh;background:#0A1628}
         <div id="lista-richieste"></div>
       </div>
     </div>
+  </div>
+</div>
+
+<!-- OVERLAY MODIFICA MEDICO -->
+<div id="ov-mod" onclick="if(event.target===this)chiudiModifica()" style="position:fixed;inset:0;z-index:350;background:rgba(10,22,40,.8);backdrop-filter:blur(4px);display:none;align-items:flex-end">
+  <div style="background:#fff;border-radius:22px 22px 0 0;width:100%;max-height:90vh;overflow-y:auto;padding:20px 18px 32px;box-shadow:0 -10px 40px rgba(0,0,0,.3)">
+    <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:16px">
+      <div style="font-weight:800;font-size:17px;color:#0A1628">&#9999;&#65039; Modifica Medico</div>
+      <button onclick="chiudiModifica()" style="background:#F0F0F0;border:none;border-radius:50%;width:30px;height:30px;cursor:pointer;font-size:16px">&#10005;</button>
+    </div>
+    <div id="mod-msg" style="display:none;font-size:12px;padding:10px;border-radius:8px;margin-bottom:12px"></div>
+    <input type="hidden" id="mod-id">
+
+    <div style="display:flex;gap:8px;margin-bottom:12px">
+      <div style="flex:1">
+        <label style="font-size:11px;font-weight:700;color:#546E7A;display:block;margin-bottom:4px">COGNOME</label>
+        <input id="mod-c" style="width:100%;padding:10px;border-radius:10px;border:1.5px solid #E0E0E0;font-family:Georgia,serif;font-size:14px;outline:none;box-sizing:border-box">
+      </div>
+      <div style="flex:1">
+        <label style="font-size:11px;font-weight:700;color:#546E7A;display:block;margin-bottom:4px">NOME</label>
+        <input id="mod-n" style="width:100%;padding:10px;border-radius:10px;border:1.5px solid #E0E0E0;font-family:Georgia,serif;font-size:14px;outline:none;box-sizing:border-box">
+      </div>
+    </div>
+
+    <label style="font-size:11px;font-weight:700;color:#546E7A;display:block;margin-bottom:4px">REPARTO / SPECIALISTICA</label>
+    <input id="mod-rp" style="width:100%;padding:10px;border-radius:10px;border:1.5px solid #E0E0E0;font-family:Georgia,serif;font-size:14px;margin-bottom:12px;outline:none;box-sizing:border-box">
+
+    <label style="font-size:11px;font-weight:700;color:#546E7A;display:block;margin-bottom:4px">STRUTTURA / OSPEDALE</label>
+    <input id="mod-st" style="width:100%;padding:10px;border-radius:10px;border:1.5px solid #E0E0E0;font-family:Georgia,serif;font-size:14px;margin-bottom:12px;outline:none;box-sizing:border-box">
+
+    <label style="font-size:11px;font-weight:700;color:#546E7A;display:block;margin-bottom:4px">INDIRIZZO</label>
+    <input id="mod-i" style="width:100%;padding:10px;border-radius:10px;border:1.5px solid #E0E0E0;font-family:Georgia,serif;font-size:14px;margin-bottom:12px;outline:none;box-sizing:border-box">
+
+    <div style="display:flex;gap:8px;margin-bottom:12px">
+      <div style="flex:1">
+        <label style="font-size:11px;font-weight:700;color:#546E7A;display:block;margin-bottom:4px">CITTA</label>
+        <input id="mod-t" style="width:100%;padding:10px;border-radius:10px;border:1.5px solid #E0E0E0;font-family:Georgia,serif;font-size:14px;outline:none;box-sizing:border-box">
+      </div>
+      <div style="flex:1">
+        <label style="font-size:11px;font-weight:700;color:#546E7A;display:block;margin-bottom:4px">CAP</label>
+        <input id="mod-cap" style="width:100%;padding:10px;border-radius:10px;border:1.5px solid #E0E0E0;font-family:Georgia,serif;font-size:14px;outline:none;box-sizing:border-box">
+      </div>
+    </div>
+
+    <label style="font-size:11px;font-weight:700;color:#546E7A;display:block;margin-bottom:4px">TELEFONO</label>
+    <input id="mod-tel" style="width:100%;padding:10px;border-radius:10px;border:1.5px solid #E0E0E0;font-family:Georgia,serif;font-size:14px;margin-bottom:12px;outline:none;box-sizing:border-box">
+
+    <label style="font-size:11px;font-weight:700;color:#546E7A;display:block;margin-bottom:4px">EMAIL</label>
+    <input id="mod-em" style="width:100%;padding:10px;border-radius:10px;border:1.5px solid #E0E0E0;font-family:Georgia,serif;font-size:14px;margin-bottom:12px;outline:none;box-sizing:border-box">
+
+    <label style="font-size:11px;font-weight:700;color:#546E7A;display:block;margin-bottom:4px">GIORNI RICEVIMENTO</label>
+    <input id="mod-g" style="width:100%;padding:10px;border-radius:10px;border:1.5px solid #E0E0E0;font-family:Georgia,serif;font-size:14px;margin-bottom:12px;outline:none;box-sizing:border-box">
+
+    <div style="display:flex;gap:8px;margin-bottom:12px">
+      <div style="flex:1">
+        <label style="font-size:11px;font-weight:700;color:#546E7A;display:block;margin-bottom:4px">ORARIO MATTINA</label>
+        <input id="mod-mo" style="width:100%;padding:10px;border-radius:10px;border:1.5px solid #E0E0E0;font-family:Georgia,serif;font-size:13px;outline:none;box-sizing:border-box">
+      </div>
+      <div style="flex:1">
+        <label style="font-size:11px;font-weight:700;color:#546E7A;display:block;margin-bottom:4px">ORARIO POMERIGGIO</label>
+        <input id="mod-po" style="width:100%;padding:10px;border-radius:10px;border:1.5px solid #E0E0E0;font-family:Georgia,serif;font-size:13px;outline:none;box-sizing:border-box">
+      </div>
+    </div>
+
+    <label style="font-size:11px;font-weight:700;color:#546E7A;display:block;margin-bottom:4px">NOTE</label>
+    <textarea id="mod-no" style="width:100%;padding:10px;border-radius:10px;border:1.5px solid #E0E0E0;font-family:Georgia,serif;font-size:14px;margin-bottom:16px;outline:none;box-sizing:border-box;resize:vertical;min-height:60px"></textarea>
+
+    <button onclick="salvaModifica()" style="width:100%;background:#1565C0;color:#fff;border:none;border-radius:50px;padding:14px;font-size:15px;font-weight:700;cursor:pointer;font-family:Georgia,serif">Salva Modifiche</button>
   </div>
 </div>
 
@@ -1161,6 +1297,17 @@ function openDet(id){
       +'</div>':"")
     +(!hasData(m)?'<div class="note-box"><div class="note-t">&#128204; NOTA</div><div class="note-v">Medico non ancora inserito nel database. Aggiorna il file Excel e ricarica l&#39;app.</div></div>':"")
     +(m.NO?'<div class="note-box"><div class="note-t">&#128204; NOTE</div><div class="note-v">'+m.NO+'</div></div>':"");
+  // Pulsanti Admin (modifica/cancella) — visibili solo all'admin
+  var sess=getS();
+  var isAdm = sess && (ADMIN_EMAILS.indexOf((sess.email||"").toLowerCase())>=0);
+  var adminBtns="";
+  if(isAdm){
+    adminBtns='<div style="display:flex;gap:8px;padding:0 16px 20px">'
+      +'<button onclick="apriModifica('+m.ID+')" type="button" style="flex:1;background:#E3F2FD;color:#1565C0;border:none;border-radius:10px;padding:11px;font-size:13px;font-weight:700;cursor:pointer;font-family:Georgia,serif">&#9999;&#65039; Modifica</button>'
+      +'<button onclick="cancellaMedico('+m.ID+')" type="button" style="flex:1;background:#FFEBEE;color:#C62828;border:none;border-radius:10px;padding:11px;font-size:13px;font-weight:700;cursor:pointer;font-family:Georgia,serif">&#128465;&#65039; Cancella</button>'
+      +'</div>';
+  }
+  document.getElementById("det-body").innerHTML += adminBtns;
   document.getElementById("ov").classList.add("show");
   document.body.style.overflow="hidden";
 }
@@ -1168,6 +1315,79 @@ function openDet(id){
 function closeDetail(){
   document.getElementById("ov").classList.remove("show");
   document.body.style.overflow="";
+}
+
+function apriModifica(id){
+  var m=null;
+  for(var i=0;i<M.length;i++){if(M[i].ID===id){m=M[i];break;}}
+  if(!m)return;
+  document.getElementById("mod-id").value=id;
+  document.getElementById("mod-c").value=m.C||"";
+  document.getElementById("mod-n").value=m.N||"";
+  document.getElementById("mod-rp").value=m.RP||"";
+  document.getElementById("mod-st").value=m.ST||"";
+  document.getElementById("mod-i").value=m.I||"";
+  document.getElementById("mod-t").value=m.T||"";
+  document.getElementById("mod-cap").value=m.CAP||"";
+  document.getElementById("mod-tel").value=m.TEL||"";
+  document.getElementById("mod-em").value=m.EM||"";
+  document.getElementById("mod-g").value=m.G||"";
+  document.getElementById("mod-mo").value=m.MO||"";
+  document.getElementById("mod-po").value=m.PO||"";
+  document.getElementById("mod-no").value=m.NO||"";
+  var msg=document.getElementById("mod-msg");
+  msg.style.display="none";
+  // Chiudi scheda e apri modifica
+  closeDetail();
+  document.getElementById("ov-mod").style.display="flex";
+  document.body.style.overflow="hidden";
+}
+
+function chiudiModifica(){
+  document.getElementById("ov-mod").style.display="none";
+  document.body.style.overflow="";
+}
+
+function salvaModifica(){
+  var id=parseInt(document.getElementById("mod-id").value);
+  var msg=document.getElementById("mod-msg");
+  var idx=-1;
+  for(var i=0;i<M.length;i++){if(M[i].ID===id){idx=i;break;}}
+  if(idx<0){
+    msg.style.display="block";msg.style.background="rgba(229,57,53,.1)";msg.style.color="#C62828";
+    msg.textContent="Medico non trovato.";return;
+  }
+  // Aggiorna i campi
+  M[idx].C   = document.getElementById("mod-c").value.trim();
+  M[idx].N   = document.getElementById("mod-n").value.trim();
+  M[idx].RP  = document.getElementById("mod-rp").value.trim();
+  M[idx].ST  = document.getElementById("mod-st").value.trim();
+  M[idx].I   = document.getElementById("mod-i").value.trim();
+  M[idx].T   = document.getElementById("mod-t").value.trim();
+  M[idx].CAP = document.getElementById("mod-cap").value.trim();
+  M[idx].TEL = document.getElementById("mod-tel").value.trim();
+  M[idx].EM  = document.getElementById("mod-em").value.trim();
+  M[idx].G   = document.getElementById("mod-g").value.trim();
+  M[idx].MO  = document.getElementById("mod-mo").value.trim();
+  M[idx].PO  = document.getElementById("mod-po").value.trim();
+  M[idx].NO  = document.getElementById("mod-no").value.trim();
+
+  msg.style.display="block";msg.style.background="rgba(46,125,50,.1)";msg.style.color="#2E7D32";
+  msg.textContent="Modifiche salvate!";
+
+  // Aggiorna lista visibile
+  doFilter();
+  setTimeout(function(){chiudiModifica();},1500);
+}
+
+function cancellaMedico(id){
+  var m=null;
+  for(var i=0;i<M.length;i++){if(M[i].ID===id){m=M[i];break;}}
+  var nome = m ? (m.C+" "+m.N).trim() : "questo medico";
+  if(!confirm("Cancellare definitivamente " + (nome||"questo medico") + "?")) return;
+  M = M.filter(function(x){return x.ID!==id;});
+  closeDetail();
+  doFilter();
 }
 
 // ── Form aggiunta medico ──────────────────────────────────────
@@ -1357,7 +1577,7 @@ function aggiungiUtente(){
   users.push({nome:nome,email:email,pw:null,pin:null,attivo:"SI",ruolo:ruolo,codice:codice,note:note});
   savU(users);
   // Chiama Google Apps Script: aggiunge email ai permessi Drive automaticamente
-  gsCall("add_utente",{nome:nome,email:email,ruolo:ruolo,note:note},function(data){
+  gsCall("add_utente",{nome:nome,email:email,ruolo:ruolo,codice:codice,note:note},function(data){
     if(data&&data.ok){
       console.log("Drive: "+email+" aggiunto automaticamente");
     }
